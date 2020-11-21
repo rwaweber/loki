@@ -1,0 +1,24 @@
+[sources.in]
+  type = "file"
+  ignore_older = 86400 # optional, no default, seconds
+  include = ["/var/log/messages"]
+
+  start_at_beginning = false # optional, default
+
+  # Priority
+  oldest_first = false # optional, default
+
+[sinks.out]
+  # General
+  inputs = ["in"]
+  type = "loki"
+
+  endpoint = "http://loki:3100" # required
+  healthcheck = true # optional, default
+
+  # Encoding
+  encoding.codec = "json"
+
+  # Labels
+  labels.host = "{{ host }}"
+  labels.file = "{{ file }}"
